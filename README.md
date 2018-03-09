@@ -1,20 +1,20 @@
 # Memory Game Project
 
+A browser-based card matching game.
+
 ## Table of Contents
 
 * [Instructions](#instructions)
-* [Contributing](#contributing)
+* [Additional information](#Additional information)
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+- To start the game, player just clicks on any card to flip it and reveal underlying content.
+- As soon as the cart is click, the game timer starts counting the time player needs to complete the game.
+- If the cards are matched, they stay flipped over.
+- If the cards are not matched, they flipped back.
+- The games ends when all cards are correctly matched.
 
-To get started, open `js/app.js` and start building out the app's functionality
+## Additional information
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+The project is done as part of the Front-End Web Developer Nanodegree program by Udacity.
