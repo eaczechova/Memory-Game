@@ -5,7 +5,7 @@ A browser-based card matching game.
 ## Table of Contents
 
 * [Instructions](#instructions)
-* [Additional information](#Additional information)
+* [Information](#Information)
 
 ## Instructions
 
@@ -15,6 +15,6 @@ A browser-based card matching game.
 - If the cards are not matched, they flipped back.
 - The games ends when all cards are correctly matched.
 
-## Additional information
+## Information
 
 The project is done as part of the Front-End Web Developer Nanodegree program by Udacity.
