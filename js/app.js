@@ -78,7 +78,7 @@ shuffle(cardList);
  let moveCounter = 0;
 
  let classArray = [];
- let arrayOfUnmached = [];
+ let arrayOfOpenCards = [];
 
  const starsList = document.querySelector('.stars');
  const stars = document.getElementsByClassName('fa-star');
@@ -86,9 +86,8 @@ shuffle(cardList);
  const modalBox = document.querySelector('.modal');
  const newGameButton = document.querySelector('.new-game');
 
- let arrayOfOpenCards = [];
-
  function displayCardSymbolAndMatch(e) {
+
    if (e.target.classList.contains('match')) {
      e.preventDefault();
    } else {
@@ -130,7 +129,7 @@ shuffle(cardList);
        results()
  }
 
- deck.addEventListener("click", displayCardSymbolAndMatch);
+ deck.addEventListener('click', displayCardSymbolAndMatch);
 
  /*
  * RESULT FUNCTION
@@ -149,9 +148,9 @@ shuffle(cardList);
    } else if (moveCounter === 31) {
      starsList.removeChild(starsList.lastElementChild);
    }
-   document.querySelector('.moves').innerHTML = moveCounter + " Moves";
+   document.querySelector('.moves').innerHTML = moveCounter + ' Moves';
 
-   if (pointCounter === 8) {
+   if (pointCounter === 2) {
     clearInterval(interval);
     document.querySelector('.moves-count').innerHTML = moveCounter;
     document.querySelector('.time-counter').innerHTML = finalTime;
@@ -161,22 +160,14 @@ shuffle(cardList);
       modalBox.style.display = 'block';
     }, 1500);
 
-    newGameButton.addEventListener('click', function() {
-      pointCounter = 0;
-      clickCounter = 0;
-      moveCounter = 0;
+    newGameButton.addEventListener('click', restart);
+ }}
 
-      document.querySelector('.moves').innerHTML = 0 + " Moves";
-      modalBox.style.display = 'none';
-      shuffle(cardList);
-      gameBuilder();
-      second.innerHTML = '00';
-      minute.innerHTML = '00';
-      console.log(starsList.children.length);
-    });
-
-   }
+ function restart() {
+   location.reload();
  }
+
+ document.querySelector('.restart').addEventListener('click', restart);
 
  /*
  * TIMER FUNCTION
@@ -192,8 +183,7 @@ shuffle(cardList);
  let second = document.querySelector('.second');
  let minute = document.querySelector('.minute');
 
- function timer() {
-   interval = setInterval(intervalFunction, 1000);
+
    function intervalFunction() {
      time++;
      if (time > 59) {
@@ -215,10 +205,12 @@ shuffle(cardList);
      }
    }
 
-   deck.removeEventListener('click', timer);
-     if (pointCounter === 8) {
-      clearInterval(cardList);
+   function timer() {
+     interval = setInterval(intervalFunction, 1000);
+     deck.removeEventListener('click', timer);
+     if (moveCounter === 2) {
+     clearInterval(interval);
    }
- }
+}
 
-deck.addEventListener("click", timer);
+deck.addEventListener('click', timer);
