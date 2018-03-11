@@ -62,6 +62,17 @@ shuffle(cardList);
 
  gameBuilder();
 
+
+ /* DISPLAY CARD AND MATCH FUNCTION
+
+ * the function operatetes on elements that DO NOT have class .match
+ * if an element cointains class .open, thn is placed in the array of open elements
+ * there is an array, classArray, that holds target element's child class name
+ * as each <i> element has class of .fa (font-awesome class name), the function slice first 3 characters
+ * if classes of two open cards match, point counter is increased by one, elements get class .match added
+ * if classes of two open cards do not match, they are flipped back and classes .open .show are removed
+ */
+
  const deck = document.querySelector('.deck');
  let pointCounter = 0;
  let moveCounter = 0;
@@ -76,17 +87,6 @@ shuffle(cardList);
  const newGameButton = document.querySelector('.new-game');
 
  let arrayOfOpenCards = [];
-
-
- /* DISPLAY CARD AND MATCH FUNCTION
-
- * the function operatetes on elements that DO NOT have class .match
- * if an element cointains class .open, thn is placed in the array of open elements
- * there is an array, classArray, that holds target element's child class name
- * as each <i> element has class of .fa (font-awesome class name), the function slice first 3 characters
- * if classes of two open cards match, point counter is increased by one, elements get class .match added
- * if classes of two open cards do not match, they are flipped back and classes .open .show are removed
- */
 
  function displayCardSymbolAndMatch(e) {
    if (e.target.classList.contains('match')) {
@@ -130,3 +130,48 @@ shuffle(cardList);
  }
 
  deck.addEventListener("click", displayCardSymbolAndMatch);
+
+ let interval;
+ let time = 0;
+ let minuteCount = 0;
+ let second = document.querySelector('.second');
+ let minute = document.querySelector('.minute');
+
+ /*
+ * TIMER FUNCTION
+ * the function is fired once first card is clicked
+ * integers between 0 and 59 are stored in variable 'time'
+ * the number is being incremented every 1000 millisecond
+ * once it higher than 59 'time' is set back to 0, while variable minuteCount count is incremented by 1
+ */
+
+ function timer() {
+   interval = setInterval(intervalFunction, 1000);
+   function intervalFunction() {
+     time++;
+     if (time > 59) {
+       minuteCount++;
+       time = 0;
+       if(minuteCount < 10) {
+         minute.innerHTML = '0' + minuteCount;
+         second.innerHTML = '0'+ time;
+       } else {
+         minute.innerHTML = minuteCount;
+         second.innerHTML = '0'+ time;
+       }
+     } else {
+       if (time <= 9) {
+         second.innerHTML = '0' + time;
+       } else {
+           second.innerHTML = time;
+         }
+     }
+   }
+
+   deck.removeEventListener('click', timer);
+     if (pointCounter === 8) {
+      clearInterval(cardList);
+   }
+ }
+
+deck.addEventListener("click", timer);
