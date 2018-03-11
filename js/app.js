@@ -134,20 +134,18 @@ shuffle(cardList);
  /*
  * RESULT FUNCTION
  * rating is based on move count stored in moveCounter variable
- * less than 20 moves is 3 stars, 20 moves is 2 stars, 27 moves is 1 star, more than 31 moves no stars at all
+ * less than 25 moves is 3 stars, 25 moves is 2 stars, 30 moves is 1 star
  * game is over when all cards are matached and internal point counter is 8, which opens modal window
  * modal window with results gives information about: time, moves and star rating. Once closed, game is reset
  */
 
  function results() {
    let finalTime = `${minute.textContent}:${second.textContent}`;
-   if (moveCounter === 20) {
+   if (moveCounter === 25) {
      starsList.removeChild(starsList.lastElementChild);
-   } else if (moveCounter === 27 ) {
+   } else if (moveCounter === 30 ) {
      starsList.removeChild(starsList.lastElementChild);
-   } else if (moveCounter === 31) {
-     starsList.removeChild(starsList.lastElementChild);
-   }
+   } 
    document.querySelector('.moves').innerHTML = moveCounter + ' Moves';
 
    if (pointCounter === 8) {
