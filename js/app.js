@@ -127,15 +127,56 @@ shuffle(cardList);
          classArray = [];
          }
        }
+       results()
  }
 
  deck.addEventListener("click", displayCardSymbolAndMatch);
 
- let interval;
- let time = 0;
- let minuteCount = 0;
- let second = document.querySelector('.second');
- let minute = document.querySelector('.minute');
+ /*
+ * RESULT FUNCTION
+ * rating is based on move count stored in moveCounter variable
+ * less than 20 moves is 3 stars, 20 moves is 2 stars, 27 moves is 1 star, more than 31 moves no stars at all
+ * game is over when all cards are matached and internal point counter is 8, which opens modal window
+ * modal window with results gives information about: time, moves and star rating. Once closed, game is reset
+ */
+
+ function results() {
+   let finalTime = `${minute.textContent}:${second.textContent}`;
+   if (moveCounter === 20) {
+     starsList.removeChild(starsList.lastElementChild);
+   } else if (moveCounter === 27 ) {
+     starsList.removeChild(starsList.lastElementChild);
+   } else if (moveCounter === 31) {
+     starsList.removeChild(starsList.lastElementChild);
+   }
+   document.querySelector('.moves').innerHTML = moveCounter + " Moves";
+
+   if (pointCounter === 8) {
+    clearInterval(interval);
+    document.querySelector('.moves-count').innerHTML = moveCounter;
+    document.querySelector('.time-counter').innerHTML = finalTime;
+    document.querySelector('.star-rating').innerHTML = starsList.innerHTML;
+
+    setTimeout(function() {
+      modalBox.style.display = 'block';
+    }, 1500);
+
+    newGameButton.addEventListener('click', function() {
+      pointCounter = 0;
+      clickCounter = 0;
+      moveCounter = 0;
+
+      document.querySelector('.moves').innerHTML = 0 + " Moves";
+      modalBox.style.display = 'none';
+      shuffle(cardList);
+      gameBuilder();
+      second.innerHTML = '00';
+      minute.innerHTML = '00';
+      console.log(starsList.children.length);
+    });
+
+   }
+ }
 
  /*
  * TIMER FUNCTION
@@ -144,6 +185,12 @@ shuffle(cardList);
  * the number is being incremented every 1000 millisecond
  * once it higher than 59 'time' is set back to 0, while variable minuteCount count is incremented by 1
  */
+
+ let interval;
+ let time = 0;
+ let minuteCount = 0;
+ let second = document.querySelector('.second');
+ let minute = document.querySelector('.minute');
 
  function timer() {
    interval = setInterval(intervalFunction, 1000);
