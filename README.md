@@ -1,6 +1,7 @@
 # Memory Game Project
 
 A browser-based card matching game.
+https://eaczechova.github.io/Memory-Game/ 
 
 ## Table of Contents
 
