@@ -150,7 +150,7 @@ shuffle(cardList);
    }
    document.querySelector('.moves').innerHTML = moveCounter + ' Moves';
 
-   if (pointCounter === 2) {
+   if (pointCounter === 8) {
     clearInterval(interval);
     document.querySelector('.moves-count').innerHTML = moveCounter;
     document.querySelector('.time-counter').innerHTML = finalTime;
