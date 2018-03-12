@@ -12,6 +12,7 @@ let cardList = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cu
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
+
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -58,9 +59,9 @@ function gameBuilder() {
    }
 
    ulElement.appendChild(fragment);
- }
+}
 
- gameBuilder();
+gameBuilder();
 
  /* DISPLAY CARD AND MATCH FUNCTION
 
@@ -82,49 +83,54 @@ let arrayOfOpenCards = [];
 const starsList = document.querySelector('.stars');
 const stars = document.getElementsByClassName('fa-star');
 
+let clickCountTest = 0;
+
 const modalBox = document.querySelector('.modal');
 const newGameButton = document.querySelector('.new-game');
 
+function eventActions(e) {
+		e.target.style.transform = 'rotateY(180deg)';
+    e.target.backfaceVisibility = 'hidden';
+    e.target.classList.add('open', 'show');
+    arrayOfOpenCards.push(e.target);
+	  classArray.push(e.target.lastChild.className.slice(3));
+};
+
 function displayCardSymbolAndMatch(e) {
-  if (e.target.classList.contains('match')) {
+  if (e.target.classList.contains('match') || e.target.classList.contains('open')) {
      e.preventDefault();
    } else {
-      if (e.target.tagName === 'LI') {
-        moveCounter++;
-        e.target.style.transform = 'rotateY(180deg)';
-        e.target.backfaceVisibility = 'hidden';
-        e.target.classList.add('open', 'show');
-       }
-   }
-
-   if (e.target.classList.contains('open')) {
-     arrayOfOpenCards.push(e.target);
-     classArray.push(e.target.lastChild.className.slice(3));
-   }
-
-   if (classArray.length === 2 && classArray[0] === classArray[1]) {
-     pointCounter++;
-     let list = document.getElementsByClassName(classArray[0]);
-     setTimeout(function() {
-      for(let i = 0; i < list.length; i++) {
-       list[i].parentNode.classList = 'card match';
-       list[i].parentNode.style.animation = 'match 1s';
-         }
-       }, 1000);
-       classArray = [];
-       arrayOfOpenCards = [];
-     } else if (classArray.length === 2 && classArray[0] !== classArray[1]) {
-        for (let i = 0; i < arrayOfOpenCards.length; i++) {
-          if (arrayOfOpenCards[i].classList.contains('open')) {
+      if (e.target.tagName === 'LI' && classArray.length===0) {
+		      eventActions(e);
+	    } else if (e.target.tagName === 'LI' && classArray.length===1) {
+		      moveCounter++;
+          eventActions(e)
+			    if (classArray.length === 2 && classArray[0] === classArray[1]) {
+            pointCounter++;
+            let list = document.getElementsByClassName(classArray[0]);
             setTimeout(function() {
-             arrayOfOpenCards[i].style.transform = 'rotateY(360deg)';
-             arrayOfOpenCards[i].backfaceVisibility = 'hidden';
-             arrayOfOpenCards[i].classList.remove('open', 'show');
-            }, 1500);}
-         classArray = [];
-        }
+              for (let i = 0; i < list.length; i++) {
+                list[i].parentNode.classList = 'card match';
+                list[i].parentNode.style.animation = 'match 1s';
+              }
+              classArray = [];
+              arrayOfOpenCards = [];
+				    }, 1000);
+          } else if (classArray.length === 2 && classArray[0] !== classArray[1]) {
+              for (let i = 0; i < arrayOfOpenCards.length; i++) {
+                if (arrayOfOpenCards[i].classList.contains('open')) {
+                  setTimeout(function() {
+                    arrayOfOpenCards[i].style.transform = 'rotateY(360deg)';
+                    arrayOfOpenCards[i].backfaceVisibility = 'hidden';
+                    arrayOfOpenCards[i].classList.remove('open', 'show');
+                    classArray = [];
+                  }, 1500);
+                }
+              }
+            }
+			  results();
       }
-      results()
+    }
 }
 
 deck.addEventListener('click', displayCardSymbolAndMatch);
@@ -132,16 +138,16 @@ deck.addEventListener('click', displayCardSymbolAndMatch);
  /*
  * RESULT FUNCTION
  * rating is based on move count stored in moveCounter variable
- * less than 25 moves is 3 stars, 25 moves is 2 stars, 30 moves is 1 star
+ * less than 20 moves is 3 stars, 20 moves is 2 stars, 28 moves is 1 star
  * game is over when all cards are matached and internal point counter is 8, which opens modal window
  * modal window with results gives information about: time, moves and star rating. Once closed, game is reset
  */
 
 function results() {
   let finalTime = `${minute.textContent}:${second.textContent}`;
-  if (moveCounter === 25) {
+  if (moveCounter === 19) {
     starsList.removeChild(starsList.lastElementChild);
-   } else if (moveCounter === 30 ) {
+  } else if (moveCounter === 25) {
       starsList.removeChild(starsList.lastElementChild);
    }
    document.querySelector('.moves').innerHTML = moveCounter + ' Moves';
